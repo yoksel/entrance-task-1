@@ -41,30 +41,118 @@ module.exports = {
             .then(event => {
               event.setRoom(roomId);
 
-              return event.setUsers(usersIds)
-                    .then(() => event);
+              return new Promise((resolve, reject) => {
+                event.setUsers(usersIds)
+                  .then(response => {
+                    return Promise.all([event.getUsers(), event.getRoom()]);
+                  })
+                  .then(
+                    response => {
+                      event.users = response[0];
+                      event.room = response[1];
+                      resolve(event);
+                    },
+                    error => {
+                      console.log('createEvent failed:\n');
+                      console.log(error);
+                    }
+                  );
+              });
             });
   },
 
   updateEvent (root, { id, input }, context) {
     return models.Event.findById(id)
             .then(event => {
-              return event.update(input);
+
+              return new Promise((resolve, reject) => {
+                event.update(input)
+                  .then(response => {
+                    return Promise.all([event.getUsers(), event.getRoom()]);
+                  })
+                  .then(
+                    response => {
+                      event.users = response[0];
+                      event.room = response[1];
+                      resolve(event);
+                    },
+                    error => {
+                      console.log('updateEvent failed\n');
+                      console.log(error);
+                    }
+                  );
+              });
+            });
+  },
+
+  addUserToEvent (root, { id, userId }, context) {
+    return models.Event.findById(id)
+            .then(event => {
+              return new Promise((resolve, reject) => {
+                event.addUser(userId)
+                  .then(response => {
+                    return Promise.all([event.getUsers(), event.getRoom()]);
+                  })
+                  .then(
+                    response => {
+                      event.users = response[0];
+                      event.room = response[1];
+                      resolve(event);
+                    },
+                    error => {
+                      console.log('addUserToEvent failed\n');
+                      console.log(error);
+                    }
+                  );
+              });
             });
   },
 
   removeUserFromEvent (root, { id, userId }, context) {
     return models.Event.findById(id)
             .then(event => {
-              event.removeUser(userId);
-              return event;
+
+              return new Promise((resolve, reject) => {
+                event.removeUser(userId)
+                  .then(response => {
+                    return Promise.all([event.getUsers(), event.getRoom()]);
+                  })
+                  .then(
+                    response => {
+                      event.users = response[0];
+                      event.room = response[1];
+                      resolve(event);
+                    },
+                    error => {
+                      console.log('removeUserFromEvent failed\n');
+                      console.log(error);
+                    }
+                  );
+              });
             });
   },
 
   changeEventRoom (root, { id, roomId }, context) {
     return models.Event.findById(id)
             .then(event => {
-              event.setRoom(id);
+
+              return new Promise((resolve, reject) => {
+                event.setRoom(roomId)
+                  .then(response => {
+                    return Promise.all([event.getUsers(), event.getRoom()]);
+                  })
+                  .then(
+                    response => {
+                      event.users = response[0];
+                      event.room = response[1];
+                      resolve(event);
+                    },
+                    error => {
+                      console.log('changeEventRoom failed\n');
+                      console.log(error);
+                    }
+                  );
+              });
             });
   },
 

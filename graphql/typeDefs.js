@@ -2,27 +2,28 @@ module.exports = `
 scalar Date
 
 type User {
-    id: ID!
-    login: String!
-    homeFloor: Int
-    avatarUrl: String!
+  id: ID!
+  login: String!
+  homeFloor: Int
+  avatarUrl: String!
 }
 
 input UserInput {
-    login: String!
-    homeFloor: Int
+  login: String!
+  homeFloor: Int
+  avatarUrl: String!
 }
 
 type UserRoom {
-    id: ID!
-    title: String!
+  id: ID!
+  title: String!
 }
 
 type Room {
-    id: ID!
-    title: String!
-    capacity: Int!
-    floor: Int!
+  id: ID!
+  title: String!
+  capacity: Int!
+  floor: Int!
 }
 
 input RoomInput {
@@ -32,18 +33,18 @@ input RoomInput {
 }
 
 type Event {
-    id: ID!
-    title: String!
-    dateStart: Date!
-    dateEnd: Date!
-    users: [User]
-    room: Room
+  id: ID!
+  title: String!
+  dateStart: Date!
+  dateEnd: Date!
+  users: [User]
+  room: Room
 }
 
 input EventInput {
-    title: String!
-    dateStart: Date!
-    dateEnd: Date!
+  title: String!
+  dateStart: Date!
+  dateEnd: Date!
 }
 
 type Query {
