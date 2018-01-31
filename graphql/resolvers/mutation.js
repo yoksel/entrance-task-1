@@ -64,7 +64,6 @@ module.exports = {
   updateEvent (root, { id, input }, context) {
     return models.Event.findById(id)
             .then(event => {
-
               return new Promise((resolve, reject) => {
                 event.update(input)
                   .then(response => {
@@ -111,7 +110,6 @@ module.exports = {
   removeUserFromEvent (root, { id, userId }, context) {
     return models.Event.findById(id)
             .then(event => {
-
               return new Promise((resolve, reject) => {
                 event.removeUser(userId)
                   .then(response => {
@@ -135,7 +133,6 @@ module.exports = {
   changeEventRoom (root, { id, roomId }, context) {
     return models.Event.findById(id)
             .then(event => {
-
               return new Promise((resolve, reject) => {
                 event.setRoom(roomId)
                   .then(response => {
